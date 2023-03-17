@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawnTrigger : MonoBehaviour
+public class EnemyDespawnTrigger : MonoBehaviour
 {
     void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.tag == "EnemySpawn")
+        if (collider.gameObject.tag == "Enemy")
         {
             Destroy(collider.gameObject);
         }

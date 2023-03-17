@@ -4,23 +4,32 @@ using UnityEngine;
 
 public abstract class Ship : MonoBehaviour
 {
-    public int team = 0;
-    public int projectileDirection = 1;
+    public Team team = Team.NEUTRAL;
     public int life = 3;
 
     public Dictionary<ProjectileType, GameObject> weapons = new Dictionary<ProjectileType, GameObject>();
 
-    void DetectHit(Collision collision)
+    public Dictionary<ProjectileType, bool> weaponsIsAvaible = new Dictionary<ProjectileType, bool>();
+
+    public void Start()
     {
-        if (collision.gameObject.tag == "Projectile")
+        Debug.Log(Resources.Load<GameObject>("Prefabs/Bullet"));
+        weapons.Add(ProjectileType.BULLET, Resources.Load<GameObject>("Prefabs/Bullet"));
+        weaponsIsAvaible.Add(ProjectileType.BULLET, true);
+    }
+
+
+    void DetectHit(Collider other)
+    {
+        if (other.gameObject.tag == "Projectile")
         {
-            var projectile = collision.gameObject.GetComponent<Projectile>();
+            var projectile = other.gameObject.GetComponent<Projectile>();
             if (projectile.team != team)
             {
-                projectile.Destroy();
                 life -= projectile.damage;
+                Destroy(other.gameObject);
 
-                if (life >= 0)
+                if (life <= 0)
                 {
                     OnLifeZero();
                 }
@@ -28,7 +37,7 @@ public abstract class Ship : MonoBehaviour
         }
     }
 
-    void Shoot(ProjectileType type = ProjectileType.BULLET)
+    public void Shoot(ProjectileType type = ProjectileType.BULLET)
     {
         var projectile = weapons[type];
 
@@ -37,8 +46,22 @@ public abstract class Ship : MonoBehaviour
             return;
         }
 
-        projectile.GetComponent<Projectile>().Define(team, projectileDirection);
+        if (!weaponsIsAvaible[type])
+        {
+            return;
+        }
+
+        var cooldown = projectile.GetComponent<Projectile>().cooldown;
+        projectile.GetComponent<Projectile>().Define(team);
         Instantiate(projectile, transform.position, Quaternion.identity);
+        StartCoroutine(CooldownWeapon(type, cooldown));
+    }
+
+    IEnumerator CooldownWeapon(ProjectileType type, float cooldown)
+    {
+        weaponsIsAvaible[type] = false;
+        yield return new WaitForSeconds(cooldown);
+        weaponsIsAvaible[type] = true;
     }
 
     void OnLifeZero()
@@ -46,9 +69,9 @@ public abstract class Ship : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        DetectHit(collision);
+        DetectHit(other);
     }
 
 }

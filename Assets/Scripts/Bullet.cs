@@ -2,19 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : Ship
+public class Bullet : Projectile
 {
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
-        team = Team.ENEMY;
-        life = 3;
+
+        type = ProjectileType.BULLET;
+        damage = 1;
+        speed = 10f;
+        cooldown = 1f;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
+    // Update is called once per frame
+    new void Update()
+    {
+        base.Update();
     }
 }
