@@ -8,19 +8,15 @@ public class SplineWalker
 {
     Spline spline;
     Transform transform;
-
+    float speed;
+    bool loop;
+    bool repeat;
+    bool reverse = false;
     List<Vector3> waypoints;
-
-    float speed = 1f;
-
     int currentWaypoint = 0;
 
-    bool repeat = true;
 
-    bool loop = false;
-
-
-    public SplineWalker(Spline spline, Transform transform, float speed, bool loop = false, bool repeat = false)
+    public SplineWalker(Spline spline, Transform transform, float speed = 1f, bool loop = false, bool repeat = false)
     {
         this.spline = spline;
         this.transform = transform;
@@ -50,12 +46,22 @@ public class SplineWalker
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
             if (transform.position == targetPosition)
-                currentWaypoint++;
+                if (reverse)
+                    currentWaypoint -= 1;
+                else
+                    currentWaypoint += 1;
+        }
+
+        if (currentWaypoint == 0 && reverse)
+        {
+            reverse = false;
+            return;
         }
 
         if (currentWaypoint == waypoints.Count && loop)
         {
-            currentWaypoint = 0;
+            currentWaypoint -= 1;
+            reverse = true;
             return;
         }
 

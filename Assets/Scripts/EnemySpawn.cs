@@ -10,5 +10,4 @@ public class EnemySpawn : MonoBehaviour
     {
         Instantiate(enemyPrefab, transform.position, Quaternion.identity);
     }
-
 }

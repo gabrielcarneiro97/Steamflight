@@ -5,9 +5,8 @@ using UnityEngine;
 public class Enemy : Ship
 {
     // Start is called before the first frame update
-    new void Start()
+    void Start()
     {
-        base.Start();
         team = Team.ENEMY;
         life = 3;
     }

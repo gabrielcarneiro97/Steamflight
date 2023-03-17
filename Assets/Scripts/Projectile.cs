@@ -19,16 +19,14 @@ public abstract class Projectile : MonoBehaviour
         gameObject.transform.Rotate(90, 0, 0);
         rb.freezeRotation = true;
     }
-    public void Define(Team team)
+    public void DefineTeam(Team team)
     {
         this.team = team;
     }
 
     void Travel()
     {
-        // Vector3 move = new Vector3(0, 1, 0);
         transform.Translate(Vector3.up * speed * Time.deltaTime, Space.Self);
-        // transform.forward = move * speed * Time.deltaTime;
     }
 
     // Update is called once per frame
