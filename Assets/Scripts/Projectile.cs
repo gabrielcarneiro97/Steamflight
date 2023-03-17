@@ -16,7 +16,7 @@ public abstract class Projectile : MonoBehaviour
     public void Start()
     {
         var rb = gameObject.GetComponent<Rigidbody>();
-        gameObject.transform.Rotate(90, 0, 0);
+        // gameObject.transform.Rotate(0, 0, 90);
         rb.freezeRotation = true;
     }
     public void DefineTeam(Team team)

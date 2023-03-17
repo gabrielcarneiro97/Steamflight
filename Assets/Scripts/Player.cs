@@ -6,10 +6,6 @@ public class Player : Ship
 {
     public float speed = 10f;
     Rigidbody rb;
-    ProjectileType primaryWeapon = ProjectileType.BULLET;
-    GameObject primaryWeaponCannonPrefab;
-    Transform primaryCannonLocation;
-    Cannon primaryCannon;
 
     void Start()
     {
@@ -47,40 +43,4 @@ public class Player : Ship
         PlayerControls();
     }
 
-    void CannonsLoader()
-    {
-
-    }
-
-    GameObject GetCannonPrefab(ProjectileType type)
-    {
-        switch (type)
-        {
-            case ProjectileType.BULLET:
-                return Resources.Load<GameObject>("Prefabs/BulletCannon");
-            default:
-                return null;
-        }
-    }
-
-    void GetPrimaryCannonLocation()
-    {
-        primaryCannonLocation = transform.Find("PrimaryCannonLocation");
-    }
-
-    void BuildShip()
-    {
-        SetPrimaryWepon();
-    }
-
-    void SetPrimaryWepon()
-    {
-        primaryWeaponCannonPrefab = GetCannonPrefab(primaryWeapon);
-        GetPrimaryCannonLocation();
-        var primaryCannonObject = Instantiate(primaryWeaponCannonPrefab, primaryCannonLocation.position, Quaternion.identity);
-        primaryCannonObject.transform.Rotate(90, 0, 0);
-        primaryCannonObject.transform.parent = gameObject.transform;
-        primaryCannon = primaryCannonObject.GetComponent<Cannon>();
-        primaryCannon.DefineTeam(team);
-    }
 }

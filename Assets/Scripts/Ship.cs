@@ -6,6 +6,12 @@ public abstract class Ship : MonoBehaviour
 {
     public Team team = Team.NEUTRAL;
     public int life = 3;
+    public ProjectileType primaryWeapon = ProjectileType.BULLET;
+    GameObject primaryWeaponCannonPrefab;
+    Transform primaryCannonLocation;
+
+    [HideInInspector]
+    public Cannon primaryCannon;
 
     void DetectHit(Collider other)
     {
@@ -33,6 +39,38 @@ public abstract class Ship : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         DetectHit(other);
+    }
+
+    public void BuildShip()
+    {
+        SetPrimaryWepon();
+    }
+
+    public void SetPrimaryWepon()
+    {
+        primaryWeaponCannonPrefab = GetCannonPrefab(primaryWeapon);
+        GetPrimaryCannonLocation();
+        var primaryCannonObject = Instantiate(primaryWeaponCannonPrefab, primaryCannonLocation.position, transform.rotation);
+        primaryCannonObject.transform.Rotate(90, 0, 0);
+        primaryCannonObject.transform.parent = gameObject.transform;
+        primaryCannon = primaryCannonObject.GetComponent<Cannon>();
+        primaryCannon.DefineTeam(team);
+    }
+
+    GameObject GetCannonPrefab(ProjectileType type)
+    {
+        switch (type)
+        {
+            case ProjectileType.BULLET:
+                return Resources.Load<GameObject>("Prefabs/BulletCannon");
+            default:
+                return null;
+        }
+    }
+
+    void GetPrimaryCannonLocation()
+    {
+        primaryCannonLocation = transform.Find("PrimaryCannonLocation");
     }
 
 }

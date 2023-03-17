@@ -35,7 +35,7 @@ public class Cannon : MonoBehaviour
         }
 
         projectilePrefab.GetComponent<Projectile>().DefineTeam(team);
-        Instantiate(projectilePrefab, shootPoint.position, Quaternion.identity);
+        Instantiate(projectilePrefab, shootPoint.position, transform.rotation);
         StartCoroutine(CooldownWeapon());
     }
 
