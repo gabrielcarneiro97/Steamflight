@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : Ship
 {
-    public float speed = 10f; //Controls velocity multiplier
+    public float speed = 10f;
 
     Rigidbody rb;
     // Start is called before the first frame update
@@ -16,14 +16,28 @@ public class Player : Ship
         life = 3;
     }
 
-    // Update is called once per frame
-    void Update()
+    void Move()
     {
         float xMove = Input.GetAxisRaw("Horizontal");
         float zMove = Input.GetAxisRaw("Vertical");
         rb.velocity = new Vector3(xMove, rb.velocity.y, zMove) * speed;
+    }
 
+    void Shoot()
+    {
+        if (Input.GetButton("Fire1"))
+            base.Shoot(ProjectileType.BULLET);
+    }
 
+    void PlayerControls()
+    {
+        Move();
         Shoot();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        PlayerControls();
     }
 }

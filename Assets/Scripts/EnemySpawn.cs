@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class EnemySpawn : MonoBehaviour
 {
@@ -9,4 +10,5 @@ public class EnemySpawn : MonoBehaviour
     {
         Instantiate(enemyPrefab, transform.position, Quaternion.identity);
     }
+
 }

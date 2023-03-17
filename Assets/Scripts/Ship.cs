@@ -13,7 +13,6 @@ public abstract class Ship : MonoBehaviour
 
     public void Start()
     {
-        Debug.Log(Resources.Load<GameObject>("Prefabs/Bullet"));
         weapons.Add(ProjectileType.BULLET, Resources.Load<GameObject>("Prefabs/Bullet"));
         weaponsIsAvaible.Add(ProjectileType.BULLET, true);
     }
