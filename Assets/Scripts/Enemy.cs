@@ -9,13 +9,13 @@ public class Enemy : Ship
     public bool walker = false;
     public bool walkerLoop = false;
     public bool wakerRepeat = false;
-
     SplineWalker splineWalker;
     // Start is called before the first frame update
     void Start()
     {
         team = Team.ENEMY;
         BuildShip();
+        rotator = new Rotator(45, 100f, transform);
 
         if (walker)
         {
@@ -29,6 +29,6 @@ public class Enemy : Ship
     {
         if (canShoot) primaryCannon.Shoot();
         if (walker) splineWalker.MoveOnSpline();
-        Rotate();
+        rotator.Rotate();
     }
 }

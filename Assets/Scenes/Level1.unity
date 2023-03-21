@@ -1319,7 +1319,6 @@ MonoBehaviour:
   life: 5
   primaryWeapon: 0
   primaryCannon: {fileID: 0}
-  isPlayer: 0
 --- !u!65 &1468940693
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1399,7 +1398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1468940691}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -74.84, y: 0, z: -16}
+  m_LocalPosition: {x: -67.53, y: 0, z: -27.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
