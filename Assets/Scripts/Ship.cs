@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Ship : MonoBehaviour
 {
+    public float speed;
     public Team team = Team.NEUTRAL;
     public int life = 3;
     public ProjectileType primaryWeapon = ProjectileType.BULLET;
@@ -12,6 +13,8 @@ public abstract class Ship : MonoBehaviour
 
     [HideInInspector]
     public Cannon primaryCannon;
+    Rigidbody rb;
+
 
     void DetectHit(Collider other)
     {
@@ -68,9 +71,49 @@ public abstract class Ship : MonoBehaviour
         }
     }
 
-    void GetPrimaryCannonLocation()
+    public void GetPrimaryCannonLocation()
     {
         primaryCannonLocation = transform.Find("PrimaryCannonLocation");
+    }
+
+
+    public void Rotate()
+    {
+        if (rb == null) rb = gameObject.GetComponent<Rigidbody>();
+
+        var velX = rb.velocity.x;
+        var rotZ = rb.rotation.eulerAngles.z;
+
+        var maxRightRotation = -45;
+        var maxLeftRotation = 45;
+        var rotationSpeed = 100f;
+
+        var convertRotZ = rotZ > 180 ? rotZ - 360 : rotZ;
+
+        if (velX != 0)
+        {
+            var directionX = velX > 0 ? 1 : -1;
+            // directionX + => right
+            // directionX - => left
+
+            if ((convertRotZ > maxRightRotation && directionX == 1) || (convertRotZ < maxLeftRotation && directionX == -1) || convertRotZ == 0)
+            {
+                var angle = Mathf.Clamp(convertRotZ - directionX * rotationSpeed * Time.deltaTime, maxRightRotation, maxLeftRotation);
+                rb.rotation = Quaternion.Euler(0, 0, angle);
+            }
+        }
+        else
+        {
+            if (convertRotZ > 3 && (int)convertRotZ <= maxLeftRotation)
+            {
+                rb.rotation = Quaternion.Euler(0, 0, convertRotZ - rotationSpeed * Time.deltaTime);
+            }
+            else if (convertRotZ < -3 && (int)convertRotZ >= maxRightRotation)
+            {
+                rb.rotation = Quaternion.Euler(0, 0, convertRotZ + rotationSpeed * Time.deltaTime);
+            }
+        }
+
     }
 
 }

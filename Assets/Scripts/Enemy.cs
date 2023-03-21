@@ -7,18 +7,20 @@ public class Enemy : Ship
 {
     public bool canShoot = false;
     public bool walker = false;
+    public bool walkerLoop = false;
+    public bool wakerRepeat = false;
+
     SplineWalker splineWalker;
     // Start is called before the first frame update
     void Start()
     {
         team = Team.ENEMY;
-        life = 3;
         BuildShip();
 
         if (walker)
         {
             var spline = GetComponent<SplineContainer>().Spline;
-            splineWalker = new SplineWalker(spline, transform, 10, true);
+            splineWalker = new SplineWalker(spline, transform, speed, walkerLoop, wakerRepeat);
         }
     }
 
@@ -27,5 +29,6 @@ public class Enemy : Ship
     {
         if (canShoot) primaryCannon.Shoot();
         if (walker) splineWalker.MoveOnSpline();
+        // Rotate();
     }
 }

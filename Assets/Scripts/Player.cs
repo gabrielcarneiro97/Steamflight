@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : Ship
 {
-    public float speed = 10f;
     Rigidbody rb;
 
     void Start()
@@ -28,7 +27,6 @@ public class Player : Ship
         {
             primaryCannon.Shoot();
         }
-        // base.Shoot(ProjectileType.BULLET);
     }
 
     void PlayerControls()
@@ -41,6 +39,7 @@ public class Player : Ship
     void Update()
     {
         PlayerControls();
+        Rotate();
     }
 
 }
