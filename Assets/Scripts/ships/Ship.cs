@@ -12,7 +12,8 @@ public abstract class Ship : MonoBehaviour
     Transform primaryCannonLocation;
     [HideInInspector]
     public Cannon primaryCannon;
-    Rigidbody rb;
+    [HideInInspector]
+    public Rigidbody rb;
     Vector3 lastPostion;
 
     public Rotator rotator;

@@ -8,11 +8,6 @@ public class Bullet : Projectile
     new void Start()
     {
         base.Start();
-
-        type = ProjectileType.BULLET;
-        damage = 1;
-        speed = 10f;
-        cooldown = 1f;
     }
 
 

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Player : Ship
 {
-    Rigidbody rb;
-
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();

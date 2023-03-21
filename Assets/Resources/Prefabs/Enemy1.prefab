@@ -176,7 +176,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7946411505934296024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1bff7d5eb8924e2fb3b44a63c70fe40, type: 3}
+  m_Script: {fileID: 11500000, guid: 67bc3329771ec4a628b99808974a95f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
@@ -184,8 +184,6 @@ MonoBehaviour:
   life: 3
   primaryWeapon: 0
   primaryCannon: {fileID: 0}
-  speed: 10
-  team: 1
   canShoot: 0
   walker: 0
   walkerLoop: 0

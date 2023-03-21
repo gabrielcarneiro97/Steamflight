@@ -64,7 +64,7 @@ Transform:
   m_Children:
   - {fileID: 8793210246489165061}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!33 &3459171369570293597
 MeshFilter:
@@ -125,9 +125,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6475069325333816986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3bedaeca65654bd49f46a04c751ed33, type: 3}
+  m_Script: {fileID: 11500000, guid: d945a59500edd49c19b91764f0ff8de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldown: 0.5
+  cooldown: 1
   type: 0
   team: 2
