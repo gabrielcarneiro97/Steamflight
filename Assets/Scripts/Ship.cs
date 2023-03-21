@@ -15,6 +15,9 @@ public abstract class Ship : MonoBehaviour
     public Cannon primaryCannon;
     Rigidbody rb;
 
+    Vector3 lastPostion;
+
+    public bool isPlayer = false;
 
     void DetectHit(Collider other)
     {
@@ -76,44 +79,64 @@ public abstract class Ship : MonoBehaviour
         primaryCannonLocation = transform.Find("PrimaryCannonLocation");
     }
 
-
-    public void Rotate()
+    void Rotation(float rotationSpeed, int maxRotation, float velX)
     {
-        if (rb == null) rb = gameObject.GetComponent<Rigidbody>();
+        var facingForward = transform.rotation.eulerAngles.y == 0;
+        var rotZ = transform.rotation.eulerAngles.z;
 
-        var velX = rb.velocity.x;
-        var rotZ = rb.rotation.eulerAngles.z;
-
-        var maxRightRotation = -45;
-        var maxLeftRotation = 45;
-        var rotationSpeed = 100f;
+        var maxLeftRotation = maxRotation;
+        var maxRightRotation = -maxRotation;
 
         var convertRotZ = rotZ > 180 ? rotZ - 360 : rotZ;
 
         if (velX != 0)
         {
-            var directionX = velX > 0 ? 1 : -1;
+            var directionX = facingForward ? (velX > 0 ? 1 : -1) : velX > 0 ? -1 : 1;
             // directionX + => right
             // directionX - => left
 
             if ((convertRotZ > maxRightRotation && directionX == 1) || (convertRotZ < maxLeftRotation && directionX == -1) || convertRotZ == 0)
             {
                 var angle = Mathf.Clamp(convertRotZ - directionX * rotationSpeed * Time.deltaTime, maxRightRotation, maxLeftRotation);
-                rb.rotation = Quaternion.Euler(0, 0, angle);
+                transform.rotation = (Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, angle));
             }
         }
         else
         {
             if (convertRotZ > 3 && (int)convertRotZ <= maxLeftRotation)
             {
-                rb.rotation = Quaternion.Euler(0, 0, convertRotZ - rotationSpeed * Time.deltaTime);
+                transform.rotation = (Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, convertRotZ - rotationSpeed * Time.deltaTime));
             }
             else if (convertRotZ < -3 && (int)convertRotZ >= maxRightRotation)
             {
-                rb.rotation = Quaternion.Euler(0, 0, convertRotZ + rotationSpeed * Time.deltaTime);
+                transform.rotation = (Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, convertRotZ + rotationSpeed * Time.deltaTime));
             }
         }
-
     }
 
+    void RbRotation(float rotationSpeed, int maxRotation)
+    {
+        if (rb == null) rb = gameObject.GetComponent<Rigidbody>();
+        var velX = rb.velocity.x;
+
+        Rotation(rotationSpeed, maxRotation, velX);
+    }
+
+    void NonRbRotation(float rotationSpeed, int maxRotation)
+    {
+        var velX = transform.position.x - lastPostion.x;
+        Rotation(rotationSpeed, maxRotation, velX);
+        lastPostion = transform.position;
+    }
+
+    public void Rotate()
+    {
+        // var maxRightRotation = -45;
+        // var maxLeftRotation = 45;
+        var maxRotation = 45;
+        var rotationSpeed = 100f;
+
+        if (isPlayer) RbRotation(rotationSpeed, maxRotation);
+        else NonRbRotation(rotationSpeed, maxRotation);
+    }
 }

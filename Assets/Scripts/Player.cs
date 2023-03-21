@@ -11,6 +11,7 @@ public class Player : Ship
         rb = gameObject.GetComponent<Rigidbody>();
         team = Team.PLAYER;
         life = 3;
+        isPlayer = true;
         BuildShip();
     }
 

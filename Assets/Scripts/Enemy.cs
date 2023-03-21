@@ -29,6 +29,6 @@ public class Enemy : Ship
     {
         if (canShoot) primaryCannon.Shoot();
         if (walker) splineWalker.MoveOnSpline();
-        // Rotate();
+        Rotate();
     }
 }
