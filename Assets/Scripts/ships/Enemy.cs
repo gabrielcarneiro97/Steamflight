@@ -10,6 +10,7 @@ public class Enemy : Ship
     public bool walkerLoop = false;
     public bool wakerRepeat = false;
     SplineWalker splineWalker;
+    public GameObject splineObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,7 +20,7 @@ public class Enemy : Ship
 
         if (walker)
         {
-            var spline = GetComponent<SplineContainer>().Spline;
+            var spline = splineObject.GetComponent<SplineContainer>().Spline;
             splineWalker = new SplineWalker(spline, transform, speed, walkerLoop, wakerRepeat);
         }
     }
@@ -30,5 +31,6 @@ public class Enemy : Ship
         if (canShoot) primaryCannon.Shoot();
         if (walker) splineWalker.MoveOnSpline();
         rotator.Rotate();
+        splineObject.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 }
