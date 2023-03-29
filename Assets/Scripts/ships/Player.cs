@@ -33,7 +33,6 @@ public class Player : Ship
         Shoot();
     }
 
-    // Update is called once per frame
     void Update()
     {
         PlayerControls();

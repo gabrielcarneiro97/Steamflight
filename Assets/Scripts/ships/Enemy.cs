@@ -5,7 +5,7 @@ using UnityEngine.Splines;
 
 public class Enemy : Ship
 {
-    public bool canShoot = false;
+    public bool isActive = false;
     public bool walker = false;
     public bool walkerLoop = false;
     public bool wakerRepeat = false;
@@ -24,11 +24,10 @@ public class Enemy : Ship
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (canShoot) primaryCannon.Shoot();
-        if (walker) splineWalker.MoveOnSpline();
+        if (isActive) primaryCannon.Shoot();
+        if (walker && isActive) splineWalker.MoveOnSpline();
         splineObject.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 }
