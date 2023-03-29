@@ -16,8 +16,6 @@ public abstract class Ship : MonoBehaviour
     public Rigidbody rb;
     Vector3 lastPostion;
 
-    public Rotator rotator;
-
     void DetectHit(Collider other)
     {
         if (other.gameObject.tag == "Projectile")

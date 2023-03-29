@@ -10,7 +10,6 @@ public class Player : Ship
         team = Team.PLAYER;
         life = 3;
         BuildShip();
-        rotator = new Rotator(45, 100f, transform, rb);
     }
 
     void Move()
@@ -38,7 +37,6 @@ public class Player : Ship
     void Update()
     {
         PlayerControls();
-        rotator.Rotate();
     }
 
 }

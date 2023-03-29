@@ -16,7 +16,6 @@ public class Enemy : Ship
     {
         team = Team.ENEMY;
         BuildShip();
-        rotator = new Rotator(45, 100f, transform);
 
         if (walker)
         {
@@ -30,7 +29,6 @@ public class Enemy : Ship
     {
         if (canShoot) primaryCannon.Shoot();
         if (walker) splineWalker.MoveOnSpline();
-        rotator.Rotate();
         splineObject.transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 }

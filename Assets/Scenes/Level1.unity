@@ -253,11 +253,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7732983184833171365, guid: 880e20a02305248ebaef6bd9bb717ce6, type: 3}
       propertyPath: walkerLoop
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7732983184833171365, guid: 880e20a02305248ebaef6bd9bb717ce6, type: 3}
       propertyPath: wakerRepeat
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7732983184833171365, guid: 880e20a02305248ebaef6bd9bb717ce6, type: 3}
       propertyPath: splineObject
