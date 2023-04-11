@@ -179,15 +179,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67bc3329771ec4a628b99808974a95f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 5
   team: 1
   life: 3
+  maxLife: 3
   primaryWeapon: 0
   primaryCannon: {fileID: 0}
-  canShoot: 0
+  rb: {fileID: 0}
+  isActive: 0
   walker: 0
   walkerLoop: 0
   wakerRepeat: 0
+  points: 10
+  splineObject: {fileID: 0}
+  enemyManager: {fileID: 0}
 --- !u!114 &2720831549547371389
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -121,9 +121,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf4b52aec68f45efa14deec2c7a75f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  team: 2
+  team: 0
   damage: 1
-  speed: 100
+  speed: 15
   type: 0
   cooldown: 1
 --- !u!54 &-5921461955233152500

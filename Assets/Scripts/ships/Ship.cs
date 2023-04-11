@@ -7,6 +7,7 @@ public abstract class Ship : MonoBehaviour
     public float speed;
     public Team team = Team.NEUTRAL;
     public int life = 3;
+    public int maxLife = 3;
     public ProjectileType primaryWeapon = ProjectileType.BULLET;
     GameObject primaryWeaponCannonPrefab;
     Transform primaryCannonLocation;
@@ -16,7 +17,7 @@ public abstract class Ship : MonoBehaviour
     public Rigidbody rb;
     Vector3 lastPostion;
 
-    void DetectHit(Collider other)
+    public void DetectHit(Collider other)
     {
         if (other.gameObject.tag == "Projectile")
         {
@@ -39,7 +40,7 @@ public abstract class Ship : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         DetectHit(other);
     }
