@@ -17,7 +17,7 @@ public abstract class Ship : MonoBehaviour
     public Rigidbody rb;
     Vector3 lastPostion;
 
-    public void DetectHit(Collider other)
+    virtual public void DetectHit(Collider other)
     {
         if (other.gameObject.tag == "Projectile")
         {
@@ -40,7 +40,7 @@ public abstract class Ship : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void OnTriggerEnter(Collider other)
+    virtual public void OnTriggerEnter(Collider other)
     {
         DetectHit(other);
     }

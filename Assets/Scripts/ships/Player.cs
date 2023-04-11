@@ -41,7 +41,7 @@ public class Player : Ship
         PlayerControls();
     }
 
-    new void OnTriggerEnter(Collider other)
+    override public void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
         if (other.gameObject.tag == "Collectable")
@@ -58,11 +58,13 @@ public class Player : Ship
 
     void OnLifeChange()
     {
+        Debug.Log("Life: " + life);
         onLifeChange.Invoke(life);
     }
 
-    new public void DetectHit(Collider other)
+    override public void DetectHit(Collider other)
     {
+        Debug.Log("Detect Hit");
         base.DetectHit(other);
         OnLifeChange();
     }

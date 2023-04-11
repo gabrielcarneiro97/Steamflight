@@ -13,7 +13,7 @@ public abstract class Projectile : MonoBehaviour
     // cooldown in seconds
     public float cooldown = .3f;
 
-    public void Start()
+    virtual public void Start()
     {
         var rb = gameObject.GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -29,7 +29,7 @@ public abstract class Projectile : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void Update()
+    virtual public void Update()
     {
         Travel();
     }

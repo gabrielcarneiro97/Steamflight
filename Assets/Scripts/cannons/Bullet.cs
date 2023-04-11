@@ -5,14 +5,14 @@ using UnityEngine;
 public class Bullet : Projectile
 {
     // Start is called before the first frame update
-    new void Start()
+    override public void Start()
     {
         base.Start();
     }
 
 
     // Update is called once per frame
-    new void Update()
+    override public void Update()
     {
         base.Update();
     }
