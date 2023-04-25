@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 5420234817404460415}
   - component: {fileID: 284650326533996401}
   - component: {fileID: 3540044958459200604}
-  - component: {fileID: 2597091435614400865}
   - component: {fileID: -5921461955233152500}
+  - component: {fileID: 2302905353024925721}
   m_Layer: 0
-  m_Name: Bullet
+  m_Name: Laser
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 7450047090712649646}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.3, y: 2.069539, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -109,22 +109,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2597091435614400865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7450047090712649646}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcf4b52aec68f45efa14deec2c7a75f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: 1
-  damage: 2
-  speed: 15
-  type: 0
 --- !u!54 &-5921461955233152500
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -152,3 +136,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &2302905353024925721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7450047090712649646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec94c72d066b4f9a96ff4165db26fe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  damage: 1
+  speed: 30
+  type: 2

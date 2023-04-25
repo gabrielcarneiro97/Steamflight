@@ -181,11 +181,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   team: 1
-  life: 3
+  life: 5
+  shield: 0
   maxLife: 3
+  maxShield: 2
   primaryWeapon: 0
   primaryCannon: {fileID: 0}
   rb: {fileID: 0}
+  bulletCannonPrefab: {fileID: 6475069325333816986, guid: 57596eb3875234fc4af4ce05772b2d1c, type: 3}
+  laserCannonPrefab: {fileID: 6475069325333816986, guid: 3a3ec6c694a3b4887afaef3b0b0ec045, type: 3}
   isActive: 0
   walker: 0
   walkerLoop: 0

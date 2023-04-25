@@ -5,7 +5,6 @@ using UnityEngine.Splines;
 
 public class Enemy : Ship
 {
-    public bool isActive = false;
     public bool walker = false;
     public bool walkerLoop = false;
     public bool wakerRepeat = false;

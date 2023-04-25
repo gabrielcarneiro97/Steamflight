@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class Canvas : MonoBehaviour
+public class CanvasManager : MonoBehaviour
 {
     public GameObject scoreTextGameObject;
     TMP_Text scoreText;
@@ -10,6 +10,9 @@ public class Canvas : MonoBehaviour
 
     public GameObject lifeTextGameObject;
     TMP_Text lifeText;
+
+    public GameObject shieldTextGameObject;
+    TMP_Text shieldText;
     EnemyManager enemyManager;
     Player player;
 
@@ -24,6 +27,9 @@ public class Canvas : MonoBehaviour
         player.onLifeChange.AddListener(ChangeLife);
         lifeText = lifeTextGameObject.GetComponent<TMP_Text>();
 
+        player.onShieldChange.AddListener(ChangeShield);
+        shieldText = shieldTextGameObject.GetComponent<TMP_Text>();
+
         lifeText.text = "Life: " + player.life;
     }
 
@@ -36,5 +42,10 @@ public class Canvas : MonoBehaviour
     void ChangeLife(int life)
     {
         lifeText.text = "Life: " + life;
+    }
+
+    void ChangeShield(int shield)
+    {
+        shieldText.text = "Shield: " + shield;
     }
 }

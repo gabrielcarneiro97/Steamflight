@@ -6,6 +6,24 @@ using UnityEngine.Events;
 public class Player : Ship
 {
     public UnityEvent<int> onLifeChange;
+    public UnityEvent<int> onShieldChange;
+
+    // Powerups
+    int weaponIsBuffedCount = 0;
+    float weaponBuffDuration = 5f;
+    int weaponBuffDamage = 2;
+
+    // Updates
+    int plasmaTrail = 0;
+    int plasmaBuffDamage = 1;
+    bool plasmaBuffApplied = false;
+    int missileTrail = 0;
+    int missileBuffLife = 1;
+    bool missileBuffApplied = false;
+    int laserTrail = 0;
+    float laserTrailBuffSpeed = 3f;
+    bool laserBuffApplied = false;
+
     void Start()
     {
         rb = gameObject.GetComponent<Rigidbody>();
@@ -24,10 +42,7 @@ public class Player : Ship
 
     void Shoot()
     {
-        if (Input.GetButton("Fire1"))
-        {
-            primaryCannon.Shoot();
-        }
+        if (Input.GetButton("Fire1")) primaryCannon.Shoot();
     }
 
     void PlayerControls()
@@ -52,21 +67,113 @@ public class Player : Ship
                 life += 1;
                 OnLifeChange();
             }
+
+            if (collectable.collectableType == CollectableType.SHIELD && shield < maxShield)
+            {
+                shield += 1;
+                OnShieldChange();
+            }
+
+            if (collectable.collectableType == CollectableType.WEAPON) StartCoroutine(BuffWeapon());
+
             Destroy(other.gameObject);
         }
     }
 
     void OnLifeChange()
     {
-        Debug.Log("Life: " + life);
         onLifeChange.Invoke(life);
+    }
+
+    void OnShieldChange()
+    {
+        onShieldChange.Invoke(shield);
     }
 
     override public void DetectHit(Collider other)
     {
-        Debug.Log("Detect Hit");
         base.DetectHit(other);
         OnLifeChange();
+        OnShieldChange();
+    }
+
+    IEnumerator BuffWeapon()
+    {
+        weaponIsBuffedCount += 1;
+        primaryCannon.damageBuff = weaponBuffDamage;
+        yield return new WaitForSeconds(weaponBuffDuration);
+        weaponIsBuffedCount -= 1;
+
+        if (weaponIsBuffedCount == 0) primaryCannon.damageBuff = 0;
+    }
+
+    public void BoxUpdate(string boxType)
+    {
+        if (boxType == "PlasmaCannon") plasmaTrail += 1;
+        if (boxType == "MissileCannon") missileTrail += 1;
+        if (boxType == "LaserCannon") laserTrail += 1;
+
+        CheckPlasmaTrail();
+        CheckMissileTrail();
+        CheckLaserTrail();
+        BuildShip();
+    }
+
+    public void CheckPlasmaTrail()
+    {
+        if (plasmaTrail > 2)
+        {
+
+        }
+
+        if (plasmaTrail > 1)
+        {
+            primaryWeapon = ProjectileType.PLASMA;
+        }
+
+        if (plasmaTrail > 0 && !plasmaBuffApplied)
+        {
+            permaDamageBuff += plasmaBuffDamage;
+            plasmaBuffApplied = true;
+        }
+    }
+
+    public void CheckMissileTrail()
+    {
+        if (missileTrail > 2)
+        {
+
+        }
+
+        if (missileTrail > 1)
+        {
+            primaryWeapon = ProjectileType.MISSILE;
+        }
+
+        if (missileTrail > 0 && !missileBuffApplied)
+        {
+            maxLife += missileBuffLife;
+            missileBuffApplied = true;
+        }
+    }
+
+    public void CheckLaserTrail()
+    {
+        if (laserTrail > 2)
+        {
+
+        }
+
+        if (laserTrail > 1)
+        {
+            primaryWeapon = ProjectileType.LASER;
+        }
+
+        if (laserTrail > 0 && !laserBuffApplied)
+        {
+            speed += laserTrailBuffSpeed;
+            laserBuffApplied = true;
+        }
     }
 
 }

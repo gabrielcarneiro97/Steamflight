@@ -10,9 +10,6 @@ public abstract class Projectile : MonoBehaviour
 
     public ProjectileType type = ProjectileType.NONE;
 
-    // cooldown in seconds
-    public float cooldown = .3f;
-
     virtual public void Start()
     {
         var rb = gameObject.GetComponent<Rigidbody>();
@@ -21,6 +18,11 @@ public abstract class Projectile : MonoBehaviour
     public void DefineTeam(Team team)
     {
         this.team = team;
+    }
+
+    public void BuffDamage(int buff)
+    {
+        damage += buff;
     }
 
     void Travel()

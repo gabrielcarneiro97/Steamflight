@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
-    GameObject projectilePrefab;
+    public GameObject projectilePrefab;
     bool isAvaible = true;
     public float cooldown = 1f;
     public ProjectileType type = ProjectileType.BULLET;
     public Team team = Team.NEUTRAL;
     Transform shootPoint;
-    // Start is called before the first frame update
+
+    public int damageBuff = 0;
+
+    public int permaDamageBuff = 0;
+
     void Start()
     {
-        projectilePrefab = GetProjectilePrefab();
         shootPoint = transform.Find("ShootPoint");
     }
 
@@ -34,7 +37,10 @@ public class Cannon : MonoBehaviour
             return;
         }
 
-        projectilePrefab.GetComponent<Projectile>().DefineTeam(team);
+        var projectile = projectilePrefab.GetComponent<Projectile>();
+        projectile.DefineTeam(team);
+        projectile.BuffDamage(damageBuff);
+        projectile.BuffDamage(permaDamageBuff);
         Instantiate(projectilePrefab, shootPoint.position, transform.rotation);
         StartCoroutine(CooldownWeapon());
     }
@@ -45,16 +51,5 @@ public class Cannon : MonoBehaviour
         isAvaible = false;
         yield return new WaitForSeconds(cooldown);
         isAvaible = true;
-    }
-
-    GameObject GetProjectilePrefab()
-    {
-        switch (type)
-        {
-            case ProjectileType.BULLET:
-                return Resources.Load<GameObject>("Prefabs/Bullet");
-            default:
-                return null;
-        }
     }
 }

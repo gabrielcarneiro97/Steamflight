@@ -46,10 +46,8 @@ public class SplineWalker
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
             if (transform.position == targetPosition)
-                if (reverse)
-                    currentWaypoint -= 1;
-                else
-                    currentWaypoint += 1;
+                if (reverse) currentWaypoint -= 1;
+                else currentWaypoint += 1;
         }
 
         if (currentWaypoint == 0 && reverse)

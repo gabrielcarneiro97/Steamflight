@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7842825737220852278}
   - component: {fileID: 7427664561105213140}
   m_Layer: 0
-  m_Name: BulletCannon
+  m_Name: LaserCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d945a59500edd49c19b91764f0ff8de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 7450047090712649646, guid: c18e8e6fb9df64dbdb8e0d880f591b76, type: 3}
-  cooldown: 0.3
-  type: 0
+  projectilePrefab: {fileID: 7450047090712649646, guid: aa8ec6a09a0ca4f57bbc87df00965749, type: 3}
+  cooldown: 0.2
+  type: 2
   team: 2
   damageBuff: 0
