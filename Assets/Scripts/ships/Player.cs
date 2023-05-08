@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public class Player : Ship
 {
+    public GameObject pauseMenuGameObject;
     public UnityEvent<int> onLifeChange;
     public UnityEvent<int> onShieldChange;
 
@@ -26,6 +27,7 @@ public class Player : Ship
 
     void Start()
     {
+        pauseMenuGameObject.SetActive(false);
         rb = gameObject.GetComponent<Rigidbody>();
         team = Team.PLAYER;
         life = 3;
@@ -45,10 +47,31 @@ public class Player : Ship
         if (Input.GetButton("Fire1")) primaryCannon.Shoot();
     }
 
+    void PauseUnpauseGame()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (pauseMenuGameObject.activeSelf)
+            {
+                Time.timeScale = 1;
+                pauseMenuGameObject.SetActive(false);
+                return;
+            }
+
+            Time.timeScale = 0;
+            pauseMenuGameObject.SetActive(true);
+        }
+
+    }
+
     void PlayerControls()
     {
-        Move();
-        Shoot();
+        if (Time.timeScale > 0)
+        {
+            Move();
+            Shoot();
+        }
+        PauseUnpauseGame();
     }
 
     void Update()
@@ -123,7 +146,7 @@ public class Player : Ship
     {
         if (plasmaTrail > 2)
         {
-
+            // explosão envolta do jogador que cria explosoes quando colide com inimigos
         }
 
         if (plasmaTrail > 1)
@@ -142,7 +165,7 @@ public class Player : Ship
     {
         if (missileTrail > 2)
         {
-
+            // robozin que roda
         }
 
         if (missileTrail > 1)
@@ -161,7 +184,7 @@ public class Player : Ship
     {
         if (laserTrail > 2)
         {
-
+            // tp 2 seg atrás
         }
 
         if (laserTrail > 1)

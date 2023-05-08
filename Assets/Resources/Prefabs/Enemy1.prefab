@@ -179,18 +179,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67bc3329771ec4a628b99808974a95f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 0
   speed: 5
   team: 1
   life: 5
   shield: 0
   maxLife: 3
   maxShield: 2
+  permaDamageBuff: 0
   primaryWeapon: 0
   primaryCannon: {fileID: 0}
   rb: {fileID: 0}
   bulletCannonPrefab: {fileID: 6475069325333816986, guid: 57596eb3875234fc4af4ce05772b2d1c, type: 3}
   laserCannonPrefab: {fileID: 6475069325333816986, guid: 3a3ec6c694a3b4887afaef3b0b0ec045, type: 3}
-  isActive: 0
+  plasmaCannonPrefab: {fileID: 6475069325333816986, guid: 734a64741fe644531bd0b1151410e587, type: 3}
+  missileCannonPrefab: {fileID: 6475069325333816986, guid: 6c603169970e74520a0b631884086ffa, type: 3}
   walker: 0
   walkerLoop: 0
   wakerRepeat: 0

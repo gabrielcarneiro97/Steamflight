@@ -5,5 +5,6 @@ public enum ProjectileType
     MISSILE,
     LASER,
     PLASMA,
+    PLASMA_EXPLOSION,
     NONE,
 }

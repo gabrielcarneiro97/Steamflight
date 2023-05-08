@@ -23,6 +23,8 @@ public abstract class Ship : MonoBehaviour
 
     public GameObject bulletCannonPrefab;
     public GameObject laserCannonPrefab;
+    public GameObject plasmaCannonPrefab;
+    public GameObject missileCannonPrefab;
 
     virtual public void DetectHit(Collider other)
     {
@@ -47,7 +49,8 @@ public abstract class Ship : MonoBehaviour
                 if (isActive) life -= damage;
                 if (life <= 0) OnLifeZero();
 
-                Destroy(other.gameObject);
+                if (projectile.type != ProjectileType.PLASMA_EXPLOSION)
+                    Destroy(other.gameObject);
             }
         }
     }
@@ -87,6 +90,10 @@ public abstract class Ship : MonoBehaviour
                 return bulletCannonPrefab;
             case ProjectileType.LASER:
                 return laserCannonPrefab;
+            case ProjectileType.PLASMA:
+                return plasmaCannonPrefab;
+            case ProjectileType.MISSILE:
+                return missileCannonPrefab;
             default:
                 return bulletCannonPrefab;
         }

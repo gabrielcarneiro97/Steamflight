@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 15441be3413eb41ebbbe3a57c6a5586e
+guid: d7557d50d59344952bb2a88b8047bb54
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Fagrak
+  - 'SPACER R '
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
