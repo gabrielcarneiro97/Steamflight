@@ -8,6 +8,7 @@ public abstract class Ship : MonoBehaviour
     public float speed;
     public Team team = Team.NEUTRAL;
     public int life = 3;
+    public bool invencible = false;
     public int shield = 0;
     public int maxLife = 3;
     public int maxShield = 2;
@@ -26,6 +27,8 @@ public abstract class Ship : MonoBehaviour
     public GameObject plasmaCannonPrefab;
     public GameObject missileCannonPrefab;
 
+    public GameObject onHitSoundPrefab;
+
     virtual public void DetectHit(Collider other)
     {
         if (other.gameObject.tag == "Projectile")
@@ -35,7 +38,7 @@ public abstract class Ship : MonoBehaviour
             {
                 var damage = projectile.damage;
 
-                if (shield > 0)
+                if (shield > 0 && !invencible)
                 {
                     shield -= damage;
                     if (shield < 0)
@@ -46,13 +49,29 @@ public abstract class Ship : MonoBehaviour
                     else damage = 0;
                 }
 
-                if (isActive) life -= damage;
+                if (!invencible) OnHitSound();
+                if (isActive && !invencible) life -= damage;
                 if (life <= 0) OnLifeZero();
 
                 if (projectile.type != ProjectileType.PLASMA_EXPLOSION)
                     Destroy(other.gameObject);
             }
         }
+    }
+
+    void OnHitSound()
+    {
+        if (onHitSoundPrefab == null) return;
+
+        var soundGameObject = Instantiate(onHitSoundPrefab, transform.position, transform.rotation);
+        var audioSource = soundGameObject.GetComponent<AudioSource>();
+        StartCoroutine(AudioSourceDestroyer(audioSource));
+    }
+
+    IEnumerator AudioSourceDestroyer(AudioSource audioSource)
+    {
+        yield return new WaitForSeconds(audioSource.clip.length);
+        Destroy(audioSource.gameObject);
     }
 
     void OnLifeZero()

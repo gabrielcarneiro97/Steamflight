@@ -128,8 +128,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d945a59500edd49c19b91764f0ff8de3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireSoundPrefab: {fileID: 6766649394414852068, guid: 154c86f749a7f48b5825a2be1a077270, type: 3}
   projectilePrefab: {fileID: 7450047090712649646, guid: aa8ec6a09a0ca4f57bbc87df00965749, type: 3}
   cooldown: 0.2
   type: 2
   team: 2
   damageBuff: 0
+  permaDamageBuff: 0

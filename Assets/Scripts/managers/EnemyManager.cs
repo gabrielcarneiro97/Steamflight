@@ -9,6 +9,13 @@ public class EnemyManager : MonoBehaviour
     public List<GameObject> enemies = new List<GameObject>();
     // Start is called before the first frame update
 
+    public GameObject winMenu;
+
+    void Start()
+    {
+        winMenu.SetActive(false);
+    }
+
     public void AddEnemy(GameObject enemy)
     {
         enemies.Add(enemy);
@@ -18,5 +25,11 @@ public class EnemyManager : MonoBehaviour
     {
         enemies.Remove(enemy);
         onEnemyDeath.Invoke(points);
+
+        if (enemies.Count == 0)
+        {
+            winMenu.SetActive(true);
+            Time.timeScale = 0;
+        }
     }
 }

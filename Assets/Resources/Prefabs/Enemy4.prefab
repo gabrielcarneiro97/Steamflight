@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 7732983184833171365}
   - component: {fileID: 2720831549547371389}
   m_Layer: 0
-  m_Name: Enemy1
+  m_Name: Enemy4
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,15 +180,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  speed: 5
+  speed: 4
   team: 1
-  life: 5
+  life: 3
   invencible: 0
   shield: 0
   maxLife: 3
   maxShield: 2
   permaDamageBuff: 0
-  primaryWeapon: 0
+  primaryWeapon: 3
   primaryCannon: {fileID: 0}
   rb: {fileID: 0}
   bulletCannonPrefab: {fileID: 6475069325333816986, guid: 57596eb3875234fc4af4ce05772b2d1c, type: 3}
@@ -199,8 +199,7 @@ MonoBehaviour:
   walker: 0
   walkerLoop: 0
   wakerRepeat: 0
-  points: 10
-  splineObject: {fileID: 0}
+  points: 20
   enemyManager: {fileID: 0}
 --- !u!114 &2720831549547371389
 MonoBehaviour:

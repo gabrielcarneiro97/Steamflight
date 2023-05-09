@@ -6,8 +6,11 @@ using UnityEngine.Events;
 public class Player : Ship
 {
     public GameObject pauseMenuGameObject;
+    public GameObject cheatsMenuGameObject;
+    public GameObject gameOverMenuGameObject;
     public UnityEvent<int> onLifeChange;
     public UnityEvent<int> onShieldChange;
+    public UnityEvent onTrailsChange;
 
     // Powerups
     int weaponIsBuffedCount = 0;
@@ -15,24 +18,34 @@ public class Player : Ship
     int weaponBuffDamage = 2;
 
     // Updates
-    int plasmaTrail = 0;
+    public int trailsSum = 0;
+    public int plasmaTrail = 0;
     int plasmaBuffDamage = 1;
     bool plasmaBuffApplied = false;
-    int missileTrail = 0;
+    public int missileTrail = 0;
     int missileBuffLife = 1;
     bool missileBuffApplied = false;
-    int laserTrail = 0;
+    public int laserTrail = 0;
     float laserTrailBuffSpeed = 3f;
     bool laserBuffApplied = false;
 
     void Start()
     {
         pauseMenuGameObject.SetActive(false);
+        cheatsMenuGameObject.SetActive(false);
+        gameOverMenuGameObject.SetActive(false);
+
         rb = gameObject.GetComponent<Rigidbody>();
         team = Team.PLAYER;
         life = 3;
         maxLife = 5;
         BuildShip();
+    }
+
+    void OnDestroy()
+    {
+        Time.timeScale = 0;
+        gameOverMenuGameObject.SetActive(true);
     }
 
     void Move()
@@ -49,7 +62,7 @@ public class Player : Ship
 
     void PauseUnpauseGame()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Cancel") && !cheatsMenuGameObject.activeSelf)
         {
             if (pauseMenuGameObject.activeSelf)
             {
@@ -64,6 +77,22 @@ public class Player : Ship
 
     }
 
+    void OpenCheatsMenu()
+    {
+        if (Input.GetKeyDown(KeyCode.O) && !pauseMenuGameObject.activeSelf)
+        {
+            if (cheatsMenuGameObject.activeSelf)
+            {
+                Time.timeScale = 1;
+                cheatsMenuGameObject.SetActive(false);
+                return;
+            }
+
+            Time.timeScale = 0;
+            cheatsMenuGameObject.SetActive(true);
+        }
+    }
+
     void PlayerControls()
     {
         if (Time.timeScale > 0)
@@ -72,6 +101,7 @@ public class Player : Ship
             Shoot();
         }
         PauseUnpauseGame();
+        OpenCheatsMenu();
     }
 
     void Update()
@@ -132,9 +162,24 @@ public class Player : Ship
 
     public void BoxUpdate(string boxType)
     {
-        if (boxType == "PlasmaCannon") plasmaTrail += 1;
-        if (boxType == "MissileCannon") missileTrail += 1;
-        if (boxType == "LaserCannon") laserTrail += 1;
+        if (trailsSum >= 4) return;
+
+        trailsSum += 1;
+        if (boxType == "PlasmaCannon")
+        {
+            plasmaTrail += 1;
+            onTrailsChange.Invoke();
+        }
+        if (boxType == "MissileCannon")
+        {
+            missileTrail += 1;
+            onTrailsChange.Invoke();
+        }
+        if (boxType == "LaserCannon")
+        {
+            laserTrail += 1;
+            onTrailsChange.Invoke();
+        }
 
         CheckPlasmaTrail();
         CheckMissileTrail();
@@ -197,6 +242,22 @@ public class Player : Ship
             speed += laserTrailBuffSpeed;
             laserBuffApplied = true;
         }
+    }
+
+    public void ResetTrails()
+    {
+        trailsSum = 0;
+        plasmaTrail = 0;
+        missileTrail = 0;
+        laserTrail = 0;
+        plasmaBuffApplied = false;
+        missileBuffApplied = false;
+        laserBuffApplied = false;
+        primaryWeapon = ProjectileType.BULLET;
+        permaDamageBuff -= plasmaBuffDamage;
+        speed -= laserTrailBuffSpeed;
+        maxLife -= missileBuffLife;
+        BuildShip();
     }
 
 }

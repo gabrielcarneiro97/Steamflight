@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Cannon : MonoBehaviour
 {
+    public GameObject fireSoundPrefab;
     public GameObject projectilePrefab;
     bool isAvaible = true;
     public float cooldown = 1f;
@@ -25,6 +26,21 @@ public class Cannon : MonoBehaviour
         this.team = team;
     }
 
+    void PlaySound()
+    {
+        if (fireSoundPrefab == null) return;
+
+        var soundGameObject = Instantiate(fireSoundPrefab, transform.position, transform.rotation);
+        var audioSource = soundGameObject.GetComponent<AudioSource>();
+        StartCoroutine(AudioSourceDestroyer(audioSource));
+    }
+
+    IEnumerator AudioSourceDestroyer(AudioSource audioSource)
+    {
+        yield return new WaitForSeconds(audioSource.clip.length);
+        Destroy(audioSource.gameObject);
+    }
+
     public void Shoot()
     {
         if (projectilePrefab == null)
@@ -43,6 +59,7 @@ public class Cannon : MonoBehaviour
         projectile.BuffDamage(permaDamageBuff);
         Instantiate(projectilePrefab, shootPoint.position, transform.rotation);
         StartCoroutine(CooldownWeapon());
+        PlaySound();
     }
 
 
