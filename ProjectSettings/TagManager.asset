@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - EnemySpawn
   - Collectable
+  - TrailBox
+  - Continue
   layers:
   - Default
   - TransparentFX

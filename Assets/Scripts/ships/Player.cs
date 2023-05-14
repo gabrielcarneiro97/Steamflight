@@ -12,6 +12,8 @@ public class Player : Ship
     public GameObject pauseMenuGameObject;
     public GameObject cheatsMenuGameObject;
     public GameObject gameOverMenuGameObject;
+    public GameObject trailsMenuGameObject;
+    TrailsMenu trailsMenu;
     public UnityEvent<int> onLifeChange;
     public UnityEvent<int> onShieldChange;
     public UnityEvent onTrailsChange;
@@ -57,13 +59,21 @@ public class Player : Ship
     public GameObject plasmaCannonPrefab;
     public GameObject missileCannonPrefab;
 
+    public UnityEvent onStateLoaded;
+
     void Start()
     {
         gameState = FindObjectOfType<GameState>();
+        gameState.LoadPlayerData(this);
+        onStateLoaded.Invoke();
+
         gameAreaRenderer = gameAreaGameObject.GetComponent<Renderer>();
         pauseMenuGameObject.SetActive(false);
         cheatsMenuGameObject.SetActive(false);
         gameOverMenuGameObject.SetActive(false);
+        trailsMenuGameObject.SetActive(false);
+        trailsMenu = trailsMenuGameObject.GetComponent<TrailsMenu>();
+
         Time.timeScale = 1;
 
         var plasmaExplosion = plasmaExplosionPrefab.GetComponent<PlasmaExplosionPower>();
@@ -77,13 +87,19 @@ public class Player : Ship
         markerGameObject.SetActive(false);
 
 
+        CheckTrails();
         BuildShip();
     }
 
     void OnDestroy()
     {
         Time.timeScale = 0;
-        gameOverMenuGameObject.SetActive(true);
+        if (gameState != null)
+        {
+            gameState.SavePlayerData(this);
+            gameState.SaveState();
+        }
+        if (gameOverMenuGameObject != null) gameOverMenuGameObject.SetActive(true);
     }
 
     void ClampPosition()
@@ -189,6 +205,12 @@ public class Player : Ship
 
             Destroy(other.gameObject);
         }
+
+        if (other.gameObject.tag == "TrailBox")
+        {
+            Destroy(other.gameObject);
+            trailsMenu.OpenMenu();
+        }
     }
 
     void OnLifeChange()
@@ -218,30 +240,35 @@ public class Player : Ship
         if (weaponIsBuffedCount == 0) primaryCannon.damageBuff = 0;
     }
 
-    public void BoxUpdate(string boxType)
+    public void BoxUpdate(TrailsType boxType)
     {
         if (trailsSum >= 4) return;
 
-        if (boxType == "PlasmaCannon")
+        if (boxType == TrailsType.PLASMA)
         {
             plasmaTrail += 1;
             onTrailsChange.Invoke();
         }
-        if (boxType == "MissileCannon")
+        if (boxType == TrailsType.MISSILE)
         {
             missileTrail += 1;
             onTrailsChange.Invoke();
         }
-        if (boxType == "LaserCannon")
+        if (boxType == TrailsType.LASER)
         {
             laserTrail += 1;
             onTrailsChange.Invoke();
         }
 
+        CheckTrails();
+        BuildShip();
+    }
+
+    public void CheckTrails()
+    {
         CheckPlasmaTrail();
         CheckMissileTrail();
         CheckLaserTrail();
-        BuildShip();
     }
 
     public void CheckPlasmaTrail()

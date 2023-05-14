@@ -14,9 +14,10 @@ public class MissileTower : Enemy
 
     void Rotate()
     {
+        if (target == null) return;
+
         var rotation = Quaternion.LookRotation(target.transform.position - transform.position);
         transform.rotation = rotation;
-        // transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * .2f);
     }
 
     new void Update()

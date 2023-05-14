@@ -6,7 +6,6 @@ public class CanvasManager : MonoBehaviour
 {
     public GameObject scoreTextGameObject;
     TMP_Text scoreText;
-    int score = 0;
 
     public GameObject lifeTextGameObject;
     TMP_Text lifeText;
@@ -15,9 +14,12 @@ public class CanvasManager : MonoBehaviour
     TMP_Text shieldText;
     EnemyManager enemyManager;
     Player player;
+    GameState gameState;
+
 
     void Start()
     {
+        gameState = FindObjectOfType<GameState>();
         player = FindObjectOfType<Player>();
         enemyManager = FindObjectOfType<EnemyManager>();
 
@@ -35,8 +37,8 @@ public class CanvasManager : MonoBehaviour
 
     void ChangeScore(int points)
     {
-        score += points;
-        scoreText.text = score.ToString();
+        gameState.state.score += points;
+        scoreText.text = gameState.state.score.ToString();
     }
 
     void ChangeLife(int life)

@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MissileCompanion : Ship
+public class MissileCompanion : MonoBehaviour
 {
     public GameObject cannonGameObject;
     Cannon cannon;
 
     void Start()
     {
-        invencible = true;
         cannon = cannonGameObject.GetComponent<Cannon>();
 
     }

@@ -17,7 +17,7 @@ public class PlasmaExplosionPower : Projectile
         var scaleStep = 40f * Time.deltaTime;
         transform.localScale = new Vector3(scale.x + scaleStep, scale.y + scaleStep, scale.z + scaleStep);
 
-        if (scale.x > 40)
+        if (scale.x > 30)
         {
             Destroy(gameObject);
         }

@@ -68,17 +68,17 @@ public class CheatsMenu : MonoBehaviour
 
     public void HandleMissileTrail()
     {
-        player.BoxUpdate("MissileCannon");
+        player.BoxUpdate(TrailsType.MISSILE);
     }
 
     public void HandleLaserTrail()
     {
-        player.BoxUpdate("LaserCannon");
+        player.BoxUpdate(TrailsType.LASER);
     }
 
     public void HandlePlasmaTrail()
     {
-        player.BoxUpdate("PlasmaCannon");
+        player.BoxUpdate(TrailsType.PLASMA);
     }
 
     void SetText()
