@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine.Events;
 
 public class Player : Ship
 {
+    GameState gameState;
+    public GameObject gameAreaGameObject;
+    Renderer gameAreaRenderer;
     public GameObject pauseMenuGameObject;
     public GameObject cheatsMenuGameObject;
     public GameObject gameOverMenuGameObject;
@@ -18,7 +22,7 @@ public class Player : Ship
     int weaponBuffDamage = 2;
 
     // Updates
-    public int trailsSum = 0;
+    public int trailsSum { get { return missileTrail + plasmaTrail + laserTrail; } }
     public int plasmaTrail = 0;
     int plasmaBuffDamage = 1;
     bool plasmaBuffApplied = false;
@@ -28,17 +32,51 @@ public class Player : Ship
     public int laserTrail = 0;
     float laserTrailBuffSpeed = 3f;
     bool laserBuffApplied = false;
+    bool markerIsOn = false;
+
+    List<Vector3> previousPositions = new List<Vector3>();
+    public GameObject markerGameObject;
+
+    public GameObject plasmaExplosionPrefab;
+
+    public GameObject missileCompanionPrefab;
+    GameObject missileCompanionGameObject;
+
+    int abilityCooldown = 1;
+    bool abilityIsOnCooldown = false;
+
+    GameObject primaryWeaponCannonPrefab;
+    Transform primaryCannonLocation;
+
+    public ProjectileType primaryWeapon = ProjectileType.BULLET;
+
+    [HideInInspector]
+    public Cannon primaryCannon;
+    public GameObject bulletCannonPrefab;
+    public GameObject laserCannonPrefab;
+    public GameObject plasmaCannonPrefab;
+    public GameObject missileCannonPrefab;
 
     void Start()
     {
+        gameState = FindObjectOfType<GameState>();
+        gameAreaRenderer = gameAreaGameObject.GetComponent<Renderer>();
         pauseMenuGameObject.SetActive(false);
         cheatsMenuGameObject.SetActive(false);
         gameOverMenuGameObject.SetActive(false);
+        Time.timeScale = 1;
+
+        var plasmaExplosion = plasmaExplosionPrefab.GetComponent<PlasmaExplosionPower>();
+        plasmaExplosion.DefineTeam(team);
 
         rb = gameObject.GetComponent<Rigidbody>();
         team = Team.PLAYER;
         life = 3;
         maxLife = 5;
+
+        markerGameObject.SetActive(false);
+
+
         BuildShip();
     }
 
@@ -48,11 +86,30 @@ public class Player : Ship
         gameOverMenuGameObject.SetActive(true);
     }
 
+    void ClampPosition()
+    {
+        Vector3 position = transform.position;
+
+        var gameXPos = gameAreaRenderer.transform.position.x;
+        var gameMinX = gameAreaRenderer.bounds.min.x + gameXPos;
+        var gameMaxX = gameAreaRenderer.bounds.max.x + gameXPos;
+
+        var gameZPos = gameAreaRenderer.transform.position.z;
+        var gameMinZ = gameAreaRenderer.bounds.min.z;
+        var gameMaxZ = gameAreaRenderer.bounds.max.z;
+
+        position.x = Mathf.Clamp(position.x, gameMinX, gameMaxX);
+        position.z = Mathf.Clamp(position.z, gameMinZ, gameMaxZ);
+
+        transform.position = position;
+    }
+
     void Move()
     {
         float xMove = Input.GetAxisRaw("Horizontal");
         float zMove = Input.GetAxisRaw("Vertical");
         rb.velocity = new Vector3(xMove, rb.velocity.y, zMove) * speed;
+        ClampPosition();
     }
 
     void Shoot()
@@ -99,6 +156,7 @@ public class Player : Ship
         {
             Move();
             Shoot();
+            UseAbility();
         }
         PauseUnpauseGame();
         OpenCheatsMenu();
@@ -164,7 +222,6 @@ public class Player : Ship
     {
         if (trailsSum >= 4) return;
 
-        trailsSum += 1;
         if (boxType == "PlasmaCannon")
         {
             plasmaTrail += 1;
@@ -189,11 +246,6 @@ public class Player : Ship
 
     public void CheckPlasmaTrail()
     {
-        if (plasmaTrail > 2)
-        {
-            // explosão envolta do jogador que cria explosoes quando colide com inimigos
-        }
-
         if (plasmaTrail > 1)
         {
             primaryWeapon = ProjectileType.PLASMA;
@@ -227,9 +279,11 @@ public class Player : Ship
 
     public void CheckLaserTrail()
     {
-        if (laserTrail > 2)
+        if (laserTrail > 2 && !markerIsOn)
         {
-            // tp 2 seg atrás
+            markerIsOn = true;
+            markerGameObject.SetActive(true);
+            StartCoroutine(MarkerMovimentation());
         }
 
         if (laserTrail > 1)
@@ -246,7 +300,6 @@ public class Player : Ship
 
     public void ResetTrails()
     {
-        trailsSum = 0;
         plasmaTrail = 0;
         missileTrail = 0;
         laserTrail = 0;
@@ -258,6 +311,117 @@ public class Player : Ship
         speed -= laserTrailBuffSpeed;
         maxLife -= missileBuffLife;
         BuildShip();
+    }
+
+    void LaserAbility()
+    {
+        StartCoroutine(InvencibleTick());
+        transform.position = markerGameObject.transform.position;
+        markerGameObject.SetActive(false);
+        StartCoroutine(AbilityCooldown(() => markerGameObject.SetActive(true)));
+    }
+
+    void PlasmaAbility()
+    {
+        Instantiate(plasmaExplosionPrefab, transform.position, Quaternion.identity);
+        StartCoroutine(AbilityCooldown());
+    }
+
+    void MissileAbility()
+    {
+        var position = transform.position;
+        position.x += 2f;
+
+        missileCompanionGameObject = Instantiate(missileCompanionPrefab, position, Quaternion.identity);
+        missileCompanionGameObject.transform.parent = transform;
+        StartCoroutine(DestroyMissileCompanion());
+    }
+
+    void UseAbility()
+    {
+        if (Input.GetButtonDown("Fire2") && !abilityIsOnCooldown)
+        {
+            if (laserTrail > 2) LaserAbility();
+            else if (plasmaTrail > 2) PlasmaAbility();
+            else if (missileTrail > 2) MissileAbility();
+        }
+    }
+
+    IEnumerator AbilityCooldown(Action reset = null)
+    {
+        abilityIsOnCooldown = true;
+        yield return new WaitForSeconds(abilityCooldown);
+        abilityIsOnCooldown = false;
+        if (reset != null) reset();
+    }
+
+    IEnumerator DestroyMissileCompanion()
+    {
+        abilityIsOnCooldown = true;
+        yield return new WaitForSeconds(5f);
+        Destroy(missileCompanionGameObject);
+        StartCoroutine(AbilityCooldown());
+    }
+
+    IEnumerator MarkerMovimentation()
+    {
+        previousPositions.Add(transform.position);
+        markerGameObject.transform.position = previousPositions[0];
+        yield return new WaitForSeconds(2f);
+
+        while (true)
+        {
+            previousPositions.Add(transform.position);
+            yield return new WaitForSeconds(0.1f);
+            if (previousPositions.Count > 0) markerGameObject.transform.position = previousPositions[0];
+            if (previousPositions.Count > 10) previousPositions.RemoveAt(0);
+        }
+    }
+
+    IEnumerator InvencibleTick()
+    {
+        invencible = true;
+        yield return new WaitForSeconds(.5f);
+        invencible = false;
+    }
+
+    public void BuildShip()
+    {
+        SetPrimaryWepon();
+    }
+
+    public void SetPrimaryWepon()
+    {
+        primaryWeaponCannonPrefab = GetCannonPrefab(primaryWeapon);
+        GetPrimaryCannonLocation();
+        var primaryCannonObject = Instantiate(primaryWeaponCannonPrefab, primaryCannonLocation.position, transform.rotation);
+        primaryCannonObject.transform.Rotate(90, 0, 0);
+        primaryCannonObject.transform.parent = gameObject.transform;
+        primaryCannon = primaryCannonObject.GetComponent<Cannon>();
+        primaryCannon.DefineTeam(team);
+        primaryCannon.permaDamageBuff = permaDamageBuff;
+    }
+
+    GameObject GetCannonPrefab(ProjectileType type)
+    {
+        switch (type)
+        {
+            case ProjectileType.BULLET:
+                return bulletCannonPrefab;
+            case ProjectileType.LASER:
+                return laserCannonPrefab;
+            case ProjectileType.PLASMA:
+                return plasmaCannonPrefab;
+            case ProjectileType.MISSILE:
+                return missileCannonPrefab;
+            default:
+                return bulletCannonPrefab;
+        }
+    }
+
+    public void GetPrimaryCannonLocation()
+    {
+        primaryCannonLocation = transform.Find("PrimaryCannonLocation");
     }
 
 }

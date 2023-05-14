@@ -15,6 +15,7 @@ public class Cannon : MonoBehaviour
     public int damageBuff = 0;
 
     public int permaDamageBuff = 0;
+    public bool ghostShoot = false;
 
     void Start()
     {
@@ -45,6 +46,13 @@ public class Cannon : MonoBehaviour
     {
         if (projectilePrefab == null)
         {
+            return;
+        }
+
+        if (ghostShoot)
+        {
+            StartCoroutine(CooldownWeapon());
+            ghostShoot = false;
             return;
         }
 

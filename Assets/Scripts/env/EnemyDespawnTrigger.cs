@@ -8,7 +8,8 @@ public class EnemyDespawnTrigger : MonoBehaviour
     {
         if (collider.gameObject.tag == "Enemy")
         {
-            Destroy(collider.gameObject);
+            var enemy = collider.gameObject.GetComponent<Enemy>();
+            enemy.Despawn();
         }
     }
 }

@@ -20,6 +20,6 @@ public class Plasma : Projectile
 
     void OnDestroy()
     {
-        GameObject explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+        GameObject explosionGameObject = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
     }
 }

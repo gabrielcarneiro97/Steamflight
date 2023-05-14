@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 7659328984398768696}
   - component: {fileID: 3472271287475659643}
   - component: {fileID: 3273494945728828424}
-  - component: {fileID: 3267297795486467928}
   - component: {fileID: -6512533068975915615}
+  - component: {fileID: 6812569655770355617}
   m_Layer: 0
-  m_Name: PlasmaExplosion
+  m_Name: PlasmaExplosionPower
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7659328984398768696
 MeshFilter:
@@ -107,22 +107,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3267297795486467928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7733958188395407938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01723dc79337e44ad8bc44a4bad3f062, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team: 0
-  damage: 1
-  speed: 0
-  type: 4
 --- !u!54 &-6512533068975915615
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -150,3 +134,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
+--- !u!114 &6812569655770355617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7733958188395407938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57a3ab6fadc064a4f887ae3432b9cdb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team: 2
+  damage: 3
+  speed: 0
+  type: 4
