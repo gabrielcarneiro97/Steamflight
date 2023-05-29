@@ -99,6 +99,7 @@ public class Player : Ship
     void OnDestroy()
     {
         Time.timeScale = 0;
+        gameState.state.score = 0;
         if (gameState != null)
             gameState.SavePlayerData(this);
         if (gameOverMenuGameObject != null) gameOverMenuGameObject.SetActive(true);
@@ -284,10 +285,7 @@ public class Player : Ship
 
     public void CheckPlasmaTrail()
     {
-        if (plasmaTrail > 1)
-        {
-            primaryWeapon = ProjectileType.PLASMA;
-        }
+        if (plasmaTrail > 1) primaryWeapon = ProjectileType.PLASMA;
 
         if (plasmaTrail > 0 && !plasmaBuffApplied)
         {
@@ -298,15 +296,7 @@ public class Player : Ship
 
     public void CheckMissileTrail()
     {
-        if (missileTrail > 2)
-        {
-            // robozin que roda
-        }
-
-        if (missileTrail > 1)
-        {
-            primaryWeapon = ProjectileType.MISSILE;
-        }
+        if (missileTrail > 1) primaryWeapon = ProjectileType.MISSILE;
 
         if (missileTrail > 0 && !missileBuffApplied)
         {
@@ -325,10 +315,7 @@ public class Player : Ship
             StartCoroutine(MarkerMovimentation());
         }
 
-        if (laserTrail > 1)
-        {
-            primaryWeapon = ProjectileType.LASER;
-        }
+        if (laserTrail > 1) primaryWeapon = ProjectileType.LASER;
 
         if (laserTrail > 0 && !laserBuffApplied)
         {

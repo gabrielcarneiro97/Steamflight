@@ -10,10 +10,8 @@ public class MissileCompanion : MonoBehaviour
     void Start()
     {
         cannon = cannonGameObject.GetComponent<Cannon>();
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         cannon.Shoot();

@@ -158,7 +158,10 @@ public class TrailsMenu : MonoBehaviour
             ColorBtn(plasma3Btn);
 
         if (player.trailsSum >= 4)
+        {
             gameObject.SetActive(false);
+            Time.timeScale = 1;
+        }
     }
 
 }

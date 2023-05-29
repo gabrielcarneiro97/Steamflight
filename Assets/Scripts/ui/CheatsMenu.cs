@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -123,6 +121,7 @@ public class CheatsMenu : MonoBehaviour
     public void HandleInvencible()
     {
         player.invencible = !player.invencible;
+        player.invencibleCheat = !player.invencibleCheat;
 
         var image = invencibleBtn.GetComponent<Image>();
         image.color = player.invencible ? Color.green : Color.white;

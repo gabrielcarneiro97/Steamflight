@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Ship : MonoBehaviour
@@ -9,6 +8,7 @@ public abstract class Ship : MonoBehaviour
     public Team team = Team.NEUTRAL;
     public int life = 3;
     public bool invencible = false;
+    public bool invencibleCheat = false;
     public int shield = 0;
     public int maxLife = 3;
     public int maxShield = 2;
@@ -24,7 +24,7 @@ public abstract class Ship : MonoBehaviour
     {
         invencible = true;
         yield return new WaitForSeconds(.5f);
-        invencible = false;
+        if (!invencibleCheat) invencible = false;
     }
 
     virtual public void DetectHit(Collider other)
