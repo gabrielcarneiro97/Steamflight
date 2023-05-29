@@ -40,8 +40,11 @@ public class State
 public class GameState : MonoBehaviour
 {
     String jsonPath;
+
+    public static GameState gameState;
     public State state = new State();
-    public String jsonState
+
+    public string json
     {
         get
         {
@@ -56,23 +59,17 @@ public class GameState : MonoBehaviour
         }
     }
 
-    public UnityEvent onStateLoaded = new UnityEvent();
-
-
-    void Start()
+    void Awake()
     {
-        jsonPath = Application.persistentDataPath + "/state.json";
-        OpenFile();
-        var sceneIndex = SceneManager.GetActiveScene().buildIndex;
+        DontDestroyOnLoad(this.gameObject);
 
-        if (sceneIndex > 0)
-        {
-            state.level = sceneIndex;
-        }
-        state.score = 0;
+        if (gameState == null) gameState = this;
+        else Destroy(this.gameObject);
+    }
 
-        Debug.Log(jsonState);
-        onStateLoaded.Invoke();
+    public void SetLevel(int level)
+    {
+        state.level = level;
     }
 
     public void SavePlayerData(Player player)
@@ -89,26 +86,9 @@ public class GameState : MonoBehaviour
         player.laserTrail = state.playerState.laserTrail;
     }
 
-    void OpenFile()
-    {
-        if (!File.Exists(jsonPath))
-        {
-            File.WriteAllText(jsonPath, jsonState);
-            return;
-        }
-
-        var fileStream = File.ReadAllText(jsonPath);
-        state = JsonUtility.FromJson<State>(fileStream);
-    }
-
-    public void SaveState()
-    {
-        File.WriteAllText(jsonPath, jsonState);
-    }
-
     public void ClearState()
     {
         state = new State();
-        File.WriteAllText(jsonPath, jsonState);
     }
+
 }

@@ -38,6 +38,8 @@ public class Player : Ship
 
     List<Vector3> previousPositions = new List<Vector3>();
     public GameObject markerGameObject;
+    public GameObject trailGameObject;
+    ParticleSystem trailParticleSystem;
 
     public GameObject plasmaExplosionPrefab;
 
@@ -59,13 +61,16 @@ public class Player : Ship
     public GameObject plasmaCannonPrefab;
     public GameObject missileCannonPrefab;
 
-    public UnityEvent onStateLoaded;
+    public GameObject shieldGameObject;
+
+    public UnityEvent onStateLoad;
 
     void Start()
     {
-        gameState = FindObjectOfType<GameState>();
+        gameState = GameState.gameState;
         gameState.LoadPlayerData(this);
-        onStateLoaded.Invoke();
+        gameState.SetLevel(1);
+        onStateLoad.Invoke();
 
         gameAreaRenderer = gameAreaGameObject.GetComponent<Renderer>();
         pauseMenuGameObject.SetActive(false);
@@ -85,7 +90,7 @@ public class Player : Ship
         maxLife = 5;
 
         markerGameObject.SetActive(false);
-
+        trailParticleSystem = trailGameObject.GetComponent<ParticleSystem>();
 
         CheckTrails();
         BuildShip();
@@ -95,10 +100,7 @@ public class Player : Ship
     {
         Time.timeScale = 0;
         if (gameState != null)
-        {
             gameState.SavePlayerData(this);
-            gameState.SaveState();
-        }
         if (gameOverMenuGameObject != null) gameOverMenuGameObject.SetActive(true);
     }
 
@@ -118,6 +120,12 @@ public class Player : Ship
         position.z = Mathf.Clamp(position.z, gameMinZ, gameMaxZ);
 
         transform.position = position;
+    }
+
+    void Rotate()
+    {
+        float xMove = Input.GetAxis("Horizontal");
+        transform.rotation = Quaternion.Euler(0, 0, -xMove * 30);
     }
 
     void Move()
@@ -180,6 +188,7 @@ public class Player : Ship
 
     void Update()
     {
+        Rotate();
         PlayerControls();
     }
 
@@ -220,6 +229,8 @@ public class Player : Ship
 
     void OnShieldChange()
     {
+        if (shield == 0) shieldGameObject.SetActive(false);
+        else shieldGameObject.SetActive(true);
         onShieldChange.Invoke(shield);
     }
 
@@ -310,6 +321,7 @@ public class Player : Ship
         {
             markerIsOn = true;
             markerGameObject.SetActive(true);
+            trailParticleSystem.Play();
             StartCoroutine(MarkerMovimentation());
         }
 
@@ -345,7 +357,12 @@ public class Player : Ship
         StartCoroutine(InvencibleTick());
         transform.position = markerGameObject.transform.position;
         markerGameObject.SetActive(false);
-        StartCoroutine(AbilityCooldown(() => markerGameObject.SetActive(true)));
+        trailParticleSystem.Stop();
+        StartCoroutine(AbilityCooldown(() =>
+        {
+            markerGameObject.SetActive(true);
+            trailParticleSystem.Play();
+        }));
     }
 
     void PlasmaAbility()
@@ -394,7 +411,7 @@ public class Player : Ship
     {
         previousPositions.Add(transform.position);
         markerGameObject.transform.position = previousPositions[0];
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.2f);
 
         while (true)
         {
@@ -427,6 +444,7 @@ public class Player : Ship
         primaryCannon = primaryCannonObject.GetComponent<Cannon>();
         primaryCannon.DefineTeam(team);
         primaryCannon.permaDamageBuff = permaDamageBuff;
+
     }
 
     GameObject GetCannonPrefab(ProjectileType type)

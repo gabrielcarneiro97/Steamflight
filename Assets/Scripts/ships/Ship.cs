@@ -18,6 +18,14 @@ public abstract class Ship : MonoBehaviour
     public Rigidbody rb;
 
     public GameObject onHitSoundPrefab;
+    public GameObject explosionParticlesPrefab;
+
+    IEnumerator OnHitPlayerInvencibility()
+    {
+        invencible = true;
+        yield return new WaitForSeconds(.5f);
+        invencible = false;
+    }
 
     virtual public void DetectHit(Collider other)
     {
@@ -31,16 +39,16 @@ public abstract class Ship : MonoBehaviour
                 if (shield > 0 && !invencible)
                 {
                     shield -= damage;
-                    if (shield < 0)
-                    {
-                        damage = -shield;
-                        shield = 0;
-                    }
-                    else damage = 0;
+                    if (shield < 0) shield = 0;
+                    damage = 0;
                 }
 
                 if (!invencible) OnHitSound();
-                if (isActive && !invencible) life -= damage;
+                if (isActive && !invencible)
+                {
+                    life -= damage;
+                    if (gameObject.tag == "Player") StartCoroutine(OnHitPlayerInvencibility());
+                }
                 if (life <= 0) OnLifeZero();
 
                 if (projectile.type != ProjectileType.PLASMA_EXPLOSION)
@@ -66,6 +74,7 @@ public abstract class Ship : MonoBehaviour
 
     void OnLifeZero()
     {
+        if (explosionParticlesPrefab) Instantiate(explosionParticlesPrefab, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

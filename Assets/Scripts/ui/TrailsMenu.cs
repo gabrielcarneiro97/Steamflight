@@ -31,7 +31,7 @@ public class TrailsMenu : MonoBehaviour
 
 
 
-    void Start()
+    void Awake()
     {
         player = playerGameObject.GetComponent<Player>();
 
@@ -98,6 +98,7 @@ public class TrailsMenu : MonoBehaviour
         missile2Btn.interactable = false;
         missile3Btn.interactable = false;
 
+
         laser1Btn.interactable = false;
         laser2Btn.interactable = false;
         laser3Btn.interactable = false;
@@ -105,6 +106,7 @@ public class TrailsMenu : MonoBehaviour
         plasma1Btn.interactable = false;
         plasma2Btn.interactable = false;
         plasma3Btn.interactable = false;
+
 
         if (player.trailsSum == 0)
         {

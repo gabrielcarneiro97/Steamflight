@@ -6,15 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public GameState gameState;
+    GameState gameState;
 
     void Start()
     {
-        gameState = FindObjectOfType<GameState>();
-        if (tag == "Continue")
-            gameState.onStateLoaded.AddListener(ActiveContinueBtn);
-
-
+        gameState = GameState.gameState;
+        Debug.Log(gameState.json);
+        ActiveContinueBtn();
     }
 
     void ActiveContinueBtn()

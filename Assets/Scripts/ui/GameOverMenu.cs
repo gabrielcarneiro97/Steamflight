@@ -13,7 +13,7 @@ public class GameOverMenu : MonoBehaviour
     public void HandleTryAgainLevel1()
     {
         Time.timeScale = 1;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
 
     public void HandleTryAgainLevel2()

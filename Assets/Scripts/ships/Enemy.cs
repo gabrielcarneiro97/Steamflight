@@ -50,7 +50,7 @@ public class Enemy : Ship
 
     void OnDestroy()
     {
-        if (!despawned && enemyManager != null) enemyManager.RemoveEnemy(gameObject, points);
+        if (enemyManager != null) enemyManager.RemoveEnemy(gameObject, despawned ? 0 : points);
     }
 
     public void Despawn()

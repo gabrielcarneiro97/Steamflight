@@ -61,11 +61,12 @@ public class Cannon : MonoBehaviour
             return;
         }
 
-        var projectile = projectilePrefab.GetComponent<Projectile>();
+        var projectileGameObject = Instantiate(projectilePrefab, shootPoint.position, transform.rotation);
+        var projectile = projectileGameObject.GetComponent<Projectile>();
         projectile.DefineTeam(team);
         projectile.BuffDamage(damageBuff);
         projectile.BuffDamage(permaDamageBuff);
-        Instantiate(projectilePrefab, shootPoint.position, transform.rotation);
+
         StartCoroutine(CooldownWeapon());
         PlaySound();
     }

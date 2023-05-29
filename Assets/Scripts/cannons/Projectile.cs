@@ -10,6 +10,8 @@ public abstract class Projectile : MonoBehaviour
 
     public ProjectileType type = ProjectileType.NONE;
 
+    public GameObject explosionParticulesPrefab;
+
     virtual public void Start()
     {
         var rb = gameObject.GetComponent<Rigidbody>();
@@ -34,5 +36,14 @@ public abstract class Projectile : MonoBehaviour
     virtual public void Update()
     {
         Travel();
+    }
+
+    virtual public void OnDestroy()
+    {
+        if (explosionParticulesPrefab != null)
+        {
+            var explosion = Instantiate(explosionParticulesPrefab, transform.position, Quaternion.identity);
+            explosion.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        }
     }
 }

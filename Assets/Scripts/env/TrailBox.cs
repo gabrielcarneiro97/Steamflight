@@ -7,18 +7,15 @@ public class TrailBox : MonoBehaviour
     public int boxNumber;
     public Player player;
 
-    void Start()
+    void Awake()
     {
         player = FindObjectOfType<Player>();
-        player.onStateLoaded.AddListener(CheckBoxStatus);
+        player.onStateLoad.AddListener(CheckBoxStatus);
     }
 
     void CheckBoxStatus()
     {
-        if (player.trailsSum >= boxNumber)
-        {
-            gameObject.SetActive(false);
-        }
+        if (player.trailsSum >= boxNumber) gameObject.SetActive(false);
     }
 
 }

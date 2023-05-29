@@ -18,8 +18,9 @@ public class Plasma : Projectile
         base.Update();
     }
 
-    void OnDestroy()
+    override public void OnDestroy()
     {
+        base.OnDestroy();
         GameObject explosionGameObject = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
     }
 }

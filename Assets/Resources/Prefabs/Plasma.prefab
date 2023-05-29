@@ -34,7 +34,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5420234817404460415
 MeshFilter:
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7cf5a4b57586b44ad9c7144d93458f16, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -152,4 +152,5 @@ MonoBehaviour:
   damage: 1
   speed: 15
   type: 3
+  explosionParticulesPrefab: {fileID: 2371076508718204810, guid: 110b3f44a926c4947b4a98ffefcf429c, type: 3}
   explosionPrefab: {fileID: 7733958188395407938, guid: 9a5b0a6b409b248c8abe23e1049d1988, type: 3}
