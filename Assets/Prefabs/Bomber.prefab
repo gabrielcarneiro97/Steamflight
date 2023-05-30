@@ -135,8 +135,9 @@ MonoBehaviour:
   isActive: 0
   speed: 0
   team: 1
-  life: 2
+  life: 3
   invencible: 0
+  invencibleCheat: 0
   shield: 0
   maxLife: 3
   maxShield: 2

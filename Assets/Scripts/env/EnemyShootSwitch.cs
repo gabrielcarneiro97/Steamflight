@@ -8,7 +8,18 @@ public class EnemyShootSwitch : MonoBehaviour
         if (collider.gameObject.tag == "Enemy")
         {
             var enemy = collider.gameObject.GetComponent<Enemy>();
-            enemy.isActive = turnOn;
+            if (enemy != null)
+            {
+                enemy.isActive = turnOn;
+                return;
+            }
+
+            var finalBoss = collider.gameObject.GetComponent<FinalBoss>();
+            if (finalBoss != null)
+            {
+                finalBoss.isActive = turnOn;
+                return;
+            }
         }
     }
 }

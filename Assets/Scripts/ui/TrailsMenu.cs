@@ -29,8 +29,6 @@ public class TrailsMenu : MonoBehaviour
     public GameObject plasma3GameObject;
     Button plasma3Btn;
 
-
-
     void Awake()
     {
         player = playerGameObject.GetComponent<Player>();

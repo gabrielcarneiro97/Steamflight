@@ -9,7 +9,6 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         gameState = GameState.gameState;
-        Debug.Log(gameState.json);
         ActiveContinueBtn();
     }
 

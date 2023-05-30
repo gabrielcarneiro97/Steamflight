@@ -150,7 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   team: 0
   damage: 1
-  speed: 15
+  speed: 10
   type: 3
   explosionParticulesPrefab: {fileID: 2371076508718204810, guid: 110b3f44a926c4947b4a98ffefcf429c, type: 3}
   explosionPrefab: {fileID: 7733958188395407938, guid: 9a5b0a6b409b248c8abe23e1049d1988, type: 3}

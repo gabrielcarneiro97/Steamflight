@@ -6,6 +6,7 @@ using UnityEngine.Events;
 
 public class Player : Ship
 {
+    public int level = 1;
     GameState gameState;
     public GameObject gameAreaGameObject;
     Renderer gameAreaRenderer;
@@ -69,7 +70,7 @@ public class Player : Ship
     {
         gameState = GameState.gameState;
         gameState.LoadPlayerData(this);
-        gameState.SetLevel(1);
+        gameState.SetLevel(level);
         onStateLoad.Invoke();
 
         gameAreaRenderer = gameAreaGameObject.GetComponent<Renderer>();

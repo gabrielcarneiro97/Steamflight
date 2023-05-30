@@ -24,7 +24,7 @@ public class CheatsMenu : MonoBehaviour
     public GameObject trailsTextGameObject;
     TMP_Text trailsText;
     Player player;
-    void Start()
+    void Awake()
     {
         player = playerGameObject.GetComponent<Player>();
         player.onTrailsChange.AddListener(HandleTrailsChange);
