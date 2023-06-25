@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    public GameObject MenuCanvas;
+    public GameObject ControlsCanvas;
+
     GameState gameState;
 
     void Start()
@@ -34,5 +37,11 @@ public class MainMenu : MonoBehaviour
     public void ContinueGame()
     {
         SceneManager.LoadScene(gameState.state.level);
+    }
+
+    public void SwitchMenuControl()
+    {
+        MenuCanvas.SetActive(!MenuCanvas.activeSelf);
+        ControlsCanvas.SetActive(!ControlsCanvas.activeSelf);
     }
 }
