@@ -696,7 +696,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7298175006146052829, guid: b4b93e1b90f4e46ad9535e29b6a8ca69, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -71.63474
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7298175006146052829, guid: b4b93e1b90f4e46ad9535e29b6a8ca69, type: 3}
       propertyPath: m_LocalRotation.w
@@ -704,23 +704,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7298175006146052829, guid: b4b93e1b90f4e46ad9535e29b6a8ca69, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7298175006146052829, guid: b4b93e1b90f4e46ad9535e29b6a8ca69, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7298175006146052829, guid: b4b93e1b90f4e46ad9535e29b6a8ca69, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7298175006146052829, guid: b4b93e1b90f4e46ad9535e29b6a8ca69, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.7076788
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7298175006146052829, guid: b4b93e1b90f4e46ad9535e29b6a8ca69, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -10.243458
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7298175006146052829, guid: b4b93e1b90f4e46ad9535e29b6a8ca69, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3184,7 +3184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -11499,7 +11499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6294442887745461722, guid: 1a503c9436bc249528ce0ad1ee292db6, type: 3}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6508548358247225288, guid: 1a503c9436bc249528ce0ad1ee292db6, type: 3}
       propertyPath: m_LocalScale.x

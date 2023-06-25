@@ -30,11 +30,16 @@ public class FinalBoss : Ship
     bool missileXIsAvaible = false;
     public int missileXCooldown = 30;
 
-    public int points = 10;
+    public int points = 100;
 
     int walkSide = 1;
+
+    public EnemyManager enemyManager;
     void Start()
     {
+        enemyManager = FindObjectOfType<EnemyManager>();
+        enemyManager.AddEnemy(gameObject);
+
         target = GameObject.FindGameObjectWithTag("Player");
         bossAreaRenderer = bossAreaGameObject.GetComponent<Renderer>();
         bossRenderer = GetComponent<Renderer>();
@@ -83,6 +88,11 @@ public class FinalBoss : Ship
             Walk();
             ClampPosition();
         }
+    }
+
+    void OnDestroy()
+    {
+        if (enemyManager != null) enemyManager.RemoveEnemy(gameObject, points);
     }
 
     void Walk()
